@@ -43,4 +43,5 @@ def predict_moves(path, moves = 0, time = 5):
 def solve(path, target_path):
 
     moves = predict_moves(path)
+    print(moves)
     moves_to_binary(moves, target_path)

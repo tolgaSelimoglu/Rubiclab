@@ -1,4 +1,5 @@
 import twophase.solver as sv
+from collections import Counter
 
 
 def moves_to_binary(moves, target_path):
@@ -6,12 +7,12 @@ def moves_to_binary(moves, target_path):
     encoded_lines = []
 
     dict = {
-            'U1' : '00001', 'U2' : '00010', 'U3' : '00011',
-            'D1' : '00101', 'D2' : '00110', 'D3' : '00111',
-            'L1' : '01001', 'L2' : '01010', 'L3' : '01011',
-            'R1' : '01101', 'R2' : '01110', 'R3' : '01111',
-            'F1' : '10001', 'F2' : '10010', 'F3' : '10011',
-            'B1' : '11001', 'B2' : '11010', 'B3' : '11011'
+            'U1' : b'a', 'U2' : b'b', 'U3' : b'c',
+            'D1' : b'd', 'D2' : b'e', 'D3' : b'f',
+            'L1' : b'g', 'L2' : b'h', 'L3' : b'i',
+            'R1' : b'j', 'R2' : b'k', 'R3' : b'l',
+            'F1' : b'm', 'F2' : b'n', 'F3' : b'o',
+            'B1' : b'p', 'B2' : b'q', 'B3' : b'r'
             }
 
 
@@ -23,13 +24,7 @@ def moves_to_binary(moves, target_path):
             f.write(f'{move}\n')
 
 
-def predict_moves(path, moves = 0, time = 5):
-
-    cubestring = ''
-    with open(path, 'r') as f:
-        cubestring = f.read()
-
-    cubestring = cubestring[0:54]
+def predict_moves(cubestring, moves = 0, time = 5):
 
     solution = sv.solve(cubestring, moves, time)
 
@@ -40,8 +35,29 @@ def predict_moves(path, moves = 0, time = 5):
     return sol_moves[:move_count]
 
 
+def count_letters(string):
+    letter_count = Counter(char.lower() for char in string if char.isalpha())
+    return letter_count
+
+
+def get_string(path):
+
+    string = ''
+    with open(path, 'r') as f:
+        string = f.read()
+
+    return string[0:54]
+
+def check_letter_counts(dict):
+    letters = ['b', 'f', 'd', 'u', 'l', 'r']
+    for letter in letters:
+        assert(dict[letter] == 9)
+
 def solve(path, target_path):
 
-    moves = predict_moves(path)
-    print(moves)
+    cubestring = get_string(path)
+    counts = count_letters(cubestring)
+    check_letter_counts(counts)
+    moves = predict_moves(cubestring)
+    # print(moves)
     moves_to_binary(moves, target_path)

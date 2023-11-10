@@ -51,7 +51,9 @@ def get_string(path):
 def check_letter_counts(dict):
     letters = ['b', 'f', 'd', 'u', 'l', 'r']
     for letter in letters:
-        assert dict[letter] is 9, f'There must be exactly 9 pieces of each color'
+        assert dict[letter] == 9, \
+            f'\nThere must be exactly 9 pieces of each color.' \
+            f'\nThere are {dict[letter]} numbers labeled {letter}.'
 
 def solve(path, target_path):
 
@@ -59,6 +61,8 @@ def solve(path, target_path):
     counts = count_letters(cubestring)
     check_letter_counts(counts)
     moves = predict_moves(cubestring)
-    assert isinstance(moves, list), f'Solving moves should be a list.\nMoves : {moves}'
-    assert moves[0] != 'Error:', f'Cube is unsolveable\nText : {moves}'
+    assert isinstance(moves, list), \
+        f'\nSolving moves should be a list.\nMoves : {moves}'
+    assert moves[0] != 'Error:', \
+        f'\nCube is unsolvable\nText : {moves}'
     moves_to_binary(moves, target_path)

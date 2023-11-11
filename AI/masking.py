@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 
-# HSV values for colors (yellow = 0, blue = 1, red = 2, green = 3, white = 4, orange = 5)
+# HSV values for colors (yellow = 0, blue = 1, red = 2,3, green = 4, white = 5, orange = 6)
 lower_bounds = [
     np.array([20, 100, 100]),  # Yellow
     np.array([100, 100, 100]),  # Blue
@@ -28,13 +28,13 @@ picsel_centers = [(50,50), (50,150), (50,250),
 
 color_names = ['Yellow', 'Blue', 'Red', 'Red', 'Green', 'White', 'Orange']
 
-img = cv.imread('pics/14.jpg')
+img = cv.imread('pics/4.jpg')
 resized_img = cv.resize(img, (300, 300))
 img_hsv = cv.cvtColor(resized_img, cv.COLOR_BGR2HSV)
 
 result_matrix = np.empty((3, 3), dtype='<U10')
 neighborhood_size = 3
-print(img_hsv[148,150])
+#print(img_hsv[147:153,147:153])
 for i in range(7):
     mask = cv.inRange(img_hsv, lower_bounds[i], upper_bounds[i])
 
@@ -44,7 +44,7 @@ for i in range(7):
                                center_x - neighborhood_size:center_x + neighborhood_size + 1, :]
 
         # Calculate the average HSV values for the neighborhood
-        avg_hsv = np.mean(neighborhood, axis=(0, 1))
+        avg_hsv = np.median(neighborhood, axis=(0, 1))
 
         # Check if the average HSV values are within the specified range
         if np.all(np.logical_and(lower_bounds[i] <= avg_hsv, avg_hsv <= upper_bounds[i])):
@@ -56,6 +56,6 @@ for i in range(7):
 
 
 
-cv.imshow('test', mask)
+
 cv.waitKey()
 print(result_matrix)

@@ -20,7 +20,8 @@ def get_pic_paths(src_path):
     image_paths = glob.glob(src_path + 'cube_face*.jpg')
     print(image_paths)
     for path in image_paths:
-        results.append(convert(path))
+        results.extend([char for row in convert(path) for char in row])
+        
 
     print(results)
     return results
@@ -57,11 +58,11 @@ def convert(path):
     #color_names = ['Yellow', 'Blue', 'Red', 'Red', 'Green', 'White', 'Orange']
 
     color_dict = {0: "U",
-             1: "R",
+             4: "R",
              2: "F",
              3: "F",
-             4: "D",
-             5: "L",
+             5: "D",
+             1: "L",
              6: "B",
     }
 
@@ -69,7 +70,7 @@ def convert(path):
     resized_img = cv.resize(img, (300, 300))
     img_hsv = cv.cvtColor(resized_img, cv.COLOR_BGR2HSV)
 
-    result_matrix = np.empty((9), dtype='<U10')
+    result_matrix = np.empty((3,3), dtype='<U10')
     neighborhood_size = 3
 
     for i in range(7):
@@ -86,9 +87,10 @@ def convert(path):
             # Check if the average HSV values are within the specified range
             if np.all(np.logical_and(lower_bounds[i] <= avg_hsv, avg_hsv <= upper_bounds[i])):
                 # Update the result matrix or perform any other desired operation
-                result_matrix[i] = color_dict[i]
+                result_matrix[center_y // 100, center_x // 100] = color_names[i]
 
 
     cv.waitKey()
+    print(result_matrix)
 
     return result_matrix

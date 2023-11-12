@@ -1,56 +1,45 @@
 import cv2
 
-
 def take_pic(path):
-    clicked = False
     count = 0
 
-    def take_pic(event,x,y,flags,param):
-        global clicked
-        if event == cv2.EVENT_RBUTTONDOWN:
-            clicked = True
-            
+    def capture_frame(frame):
+        nonlocal count
+        cv2.imwrite(f"{path}cube_face{count}.jpg", frame)
+        count += 1
+        print(f"Captured image {count}")
+
     cap = cv2.VideoCapture(0)
     cv2.namedWindow('Test')
-    cv2.setMouseCallback('Test', take_pic) 
 
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    x = width//3
-    y = height//3
-
-    w = width//4
-    h = width//3
+    x = width // 3
+    y = height // 3
+    w = width // 4
+    h = width // 3
 
     while True:
         ret, frame = cap.read()
-        
-        cv2.rectangle(frame, (x, y), (x+w, y+h), color=(0,0,255),thickness= 4)
-        
+        cv2.rectangle(frame, (x, y), (x + w, y + h), color=(0, 0, 255), thickness=4)
         cv2.imshow('Test', frame)
-        
-        if clicked == True:
-            clicked = False
-            #print(clicked)
+
+        key = cv2.waitKey(1)
+        if key == ord('s'):
+            print("AA   ")
             if count != 6:
                 #print("!!")
-                img = cv2.imwrite(f"{path}cube_face{count}.jpg", frame)
+                img = cv2.imwrite(f'{path}cube_face{count}.jpg', frame)
                 #print(img)
                 if img:
                     
                     count = count + 1
                     print(count)
-                    
-                
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        elif key == ord('q'):
             break
 
-            
     cap.release()
-
-
-
     cv2.destroyAllWindows()
 
     for i in range(6):

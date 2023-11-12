@@ -6,12 +6,11 @@ import glob
 def moves_to_urfdlb(src_path, target_path):
 
     results = get_pic_paths(src_path)
-"""
-ezgi kod buraya
-target_path src/data/cube_colours.txt
-olacak
-içine urfdlb diye kaydedecek
-"""
+    print(results)
+    
+    with open(target_path, 'w') as f:
+            for elem in results:
+                f.write(f'{elem}')
 
 
 def get_pic_paths(src_path):
@@ -49,17 +48,28 @@ def convert(path):
         np.array([25, 255, 255])  # Orange
     ]
 
+    
+
     picsel_centers = [(50,50), (50,150), (50,250),
                   (150,50), (150,150), (150, 250),
                   (250,50), (250,150), (250,250)]
 
-    color_names = ['Yellow', 'Blue', 'Red', 'Red', 'Green', 'White', 'Orange']
+    #color_names = ['Yellow', 'Blue', 'Red', 'Red', 'Green', 'White', 'Orange']
 
-    img = cv.imread('pics/ezgi.jpg')
+    color_dict = {0: "U",
+             1: "R",
+             2: "F",
+             3: "F",
+             4: "D",
+             5: "L",
+             6: "B",
+    }
+
+    img = cv.imread(path)
     resized_img = cv.resize(img, (300, 300))
     img_hsv = cv.cvtColor(resized_img, cv.COLOR_BGR2HSV)
 
-    result_matrix = np.empty((3, 3), dtype='<U10')
+    result_matrix = np.empty((9), dtype='<U10')
     neighborhood_size = 3
 
     for i in range(7):
@@ -76,7 +86,8 @@ def convert(path):
             # Check if the average HSV values are within the specified range
             if np.all(np.logical_and(lower_bounds[i] <= avg_hsv, avg_hsv <= upper_bounds[i])):
                 # Update the result matrix or perform any other desired operation
-                result_matrix[center_y // 100, center_x // 100] = color_names[i]
+                result_matrix[i] = color_dict[i]
+
 
     cv.waitKey()
 

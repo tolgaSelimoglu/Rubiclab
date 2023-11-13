@@ -1,3 +1,4 @@
+
 import cv2 as cv
 import numpy as np
 import glob
@@ -36,7 +37,7 @@ def convert(path):
         np.array([160, 95, 100]),  # Red (2. gap)
         np.array([40, 100, 100]),  # Green
         np.array([0, 0, 195]),       # White
-        np.array([2, 100, 100])  # Orange
+        np.array([10, 100, 100])  # Orange
     ]
 
     upper_bounds = [
@@ -55,7 +56,7 @@ def convert(path):
                   (150,50), (150,150), (150, 250),
                   (250,50), (250,150), (250,250)]
 
-    #color_names = ['Yellow', 'Blue', 'Red', 'Red', 'Green', 'White', 'Orange']
+    color_names = ['Yellow', 'Blue', 'Red', 'Red', 'Green', 'White', 'Orange']
 
     color_dict = {0: "U",
              4: "R",
@@ -71,7 +72,8 @@ def convert(path):
     img_hsv = cv.cvtColor(resized_img, cv.COLOR_BGR2HSV)
 
     result_matrix = np.empty((3,3), dtype='<U10')
-    neighborhood_size = 3
+    result_matrix2 = np.empty((3,3), dtype='<U10')
+    neighborhood_size = 5
 
     for i in range(7):
         mask = cv.inRange(img_hsv, lower_bounds[i], upper_bounds[i])
@@ -87,10 +89,11 @@ def convert(path):
             # Check if the average HSV values are within the specified range
             if np.all(np.logical_and(lower_bounds[i] <= avg_hsv, avg_hsv <= upper_bounds[i])):
                 # Update the result matrix or perform any other desired operation
-                result_matrix[center_y // 100, center_x // 100] = color_names[i]
+                result_matrix[center_y // 100, center_x // 100] = color_dict[i]
+                result_matrix2[center_y // 100, center_x // 100] = color_names[i]
 
 
     cv.waitKey()
-    print(result_matrix)
+    print(result_matrix2)
 
     return result_matrix

@@ -1,3 +1,4 @@
+
 import cv2
 
 def take_pic(path):
@@ -9,7 +10,7 @@ def take_pic(path):
         count += 1
         print(f"Captured image {count}")
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     cv2.namedWindow('Test')
 
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))

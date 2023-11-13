@@ -1,5 +1,6 @@
 import twophase.solver as sv
 from collections import Counter
+import os
 
 
 def moves_to_binary(moves, target_path):
@@ -61,6 +62,8 @@ def solve(path, target_path):
     counts = count_letters(cubestring)
     check_letter_counts(counts)
     moves = predict_moves(cubestring)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(moves)
     assert isinstance(moves, list), \
         f'\nSolving moves should be a list.\nMoves : {moves}'
     assert moves[0] != 'Error:', \

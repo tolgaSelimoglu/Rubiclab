@@ -3,6 +3,13 @@ from collections import Counter
 import os
 
 
+def print_exp(path):
+
+    with open(path, "r") as f:
+        for line in f:
+            print(line.strip())
+
+
 def moves_to_binary(moves, target_path):
 
     encoded_lines = []
@@ -23,6 +30,42 @@ def moves_to_binary(moves, target_path):
     with open(target_path, 'w') as f:
         for move in encoded_lines:
             f.write(f'{move}\n')
+
+
+
+def moves_to_hand(moves, target_path):
+
+    encoded_lines = []
+
+    dict = {
+        'U1': "Turn Upper Face 1 time clockwise",
+        'U2': "Turn Upper Face 2 times clockwise or counterclockwise",
+        'U3': "Turn Upper Face 1 times counterclockwise",
+        'D1': "Turn Down Face 1 time clockwise",
+        'D2': "Turn Down Face 2 times clockwise or counterclockwise",
+        'D3': "Turn Down Face 1 times counterclockwise",
+        'L1': "Turn Left Face 1 time clockwise",
+        'L2': "Turn Left Face 2 times clockwise or counterclockwise",
+        'L3': "Turn Left Face 1 times counterclockwise",
+        'R1': "Turn Right Face 1 time clockwise",
+        'R2': "Turn Right Face 2 times clockwise or counterclockwise",
+        'R3': "Turn Right Face 1 times counterclockwise",
+        'F1': "Turn Front Face 1 time clockwise",
+        'F2': "Turn Front Face 2 times clockwise or counterclockwise",
+        'F3': "Turn Front Face 1 times counterclockwise",
+        'B1': "Turn Back Face 1 time clockwise",
+        'B2': "Turn Back Face 2 times clockwise or counterclockwise",
+        'B3': "Turn Back Face 1 times counterclockwise"
+    }
+
+
+
+    for move in moves:
+        encoded_lines.append(dict[move[:2]])
+
+    with open(target_path, 'w') as f:
+        for line in encoded_lines:
+            f.write(f'{line}\n')
 
 
 def predict_moves(cubestring, moves = 0, time = 5):
@@ -56,7 +99,7 @@ def check_letter_counts(dict):
             f'\nThere must be exactly 9 pieces of each color.' \
             f'\nThere are {dict[letter]} numbers labeled {letter}.'
 
-def solve(path, target_path):
+def solve(path, target_path1, target_path2):
 
     cubestring = get_string(path)
     counts = count_letters(cubestring)
@@ -68,4 +111,5 @@ def solve(path, target_path):
         f'\nSolving moves should be a list.\nMoves : {moves}'
     assert moves[0] != 'Error:', \
         f'\nCube is unsolvable\nText : {moves}'
-    moves_to_binary(moves, target_path)
+    moves_to_binary(moves, target_path1)
+    moves_to_hand(moves, target_path2)

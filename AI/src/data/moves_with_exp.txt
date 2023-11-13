@@ -1,0 +1,6 @@
+Turn Right Face 1 time clockwise
+Turn Left Face 1 time clockwise
+Turn Front Face 1 time clockwise
+Turn Back Face 1 time clockwise
+Turn Right Face 1 time clockwise
+Turn Left Face 1 time clockwise

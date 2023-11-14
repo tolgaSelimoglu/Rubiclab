@@ -41,7 +41,7 @@ def crop_images(path, image_count):
 
             cropped_image = image[crop_coordinates[1]:crop_coordinates[1] + crop_coordinates[3], crop_coordinates[0]:crop_coordinates[0] + crop_coordinates[2]]
 
-            cv2.imwrite(f'src/data/cube_face{i}.jpg', cropped_image)
+            cv2.imwrite(f'{path}cube_face{i}.jpg', cropped_image)
 
 
 def image_main(path):

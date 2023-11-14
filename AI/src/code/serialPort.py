@@ -10,7 +10,7 @@ def serial_stuff(moves_path):
 
     with open(moves_path, 'r') as file:
         for line in file:
-            moves.append(line.strip())  # Append each line without the trailing newline character
+            moves.append(line.strip())
     print(moves)
 
 

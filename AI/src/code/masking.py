@@ -37,7 +37,7 @@ def convert(path):
         np.array([160, 95, 100]),  # Red (2. gap)
         np.array([40, 100, 100]),  # Green
         np.array([0, 0, 195]),       # White
-        np.array([10, 100, 100])  # Orange
+        np.array([8, 100, 100])  # Orange
     ]
 
     upper_bounds = [

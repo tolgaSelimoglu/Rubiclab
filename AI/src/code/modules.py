@@ -7,7 +7,7 @@ def print_exp(path):
 
     with open(path, "r") as f:
         for line in f:
-            print(line.strip())
+            print("\n" + line.strip())
 
 
 def moves_to_binary(moves, target_path):

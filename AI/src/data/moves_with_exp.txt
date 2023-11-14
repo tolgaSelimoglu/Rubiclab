@@ -1,6 +1,20 @@
-Turn Right Face 1 time clockwise
-Turn Left Face 1 time clockwise
+Turn Back Face 2 times clockwise or counterclockwise
+Turn Right Face 2 times clockwise or counterclockwise
+Turn Back Face 2 times clockwise or counterclockwise
+Turn Front Face 2 times clockwise or counterclockwise
+Turn Right Face 1 times counterclockwise
+Turn Down Face 2 times clockwise or counterclockwise
+Turn Left Face 1 times counterclockwise
+Turn Right Face 2 times clockwise or counterclockwise
+Turn Upper Face 2 times clockwise or counterclockwise
+Turn Right Face 2 times clockwise or counterclockwise
+Turn Back Face 1 times counterclockwise
 Turn Front Face 1 time clockwise
-Turn Back Face 1 time clockwise
 Turn Right Face 1 time clockwise
-Turn Left Face 1 time clockwise
+Turn Upper Face 1 times counterclockwise
+Turn Front Face 2 times clockwise or counterclockwise
+Turn Right Face 2 times clockwise or counterclockwise
+Turn Upper Face 1 times counterclockwise
+Turn Back Face 1 time clockwise
+Turn Down Face 1 time clockwise
+Turn Left Face 1 times counterclockwise

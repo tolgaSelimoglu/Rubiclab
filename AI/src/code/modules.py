@@ -4,13 +4,38 @@ import os
 
 
 def print_exp(path):
+    """
+        Prints moves with explanations
+
+        Arguments:
+            path : string, path to move explanations
+
+        Prints:
+            Move explanations line by line
+
+        Returns:
+            None
+    """
 
     with open(path, "r") as f:
         for line in f:
             print("\n" + line.strip())
 
 
-def moves_to_binary(moves, target_path):
+def moves_to_b_format(moves, target_path):
+    """
+        Convert moves to b'*' format
+
+        Arguments:
+            moves : List, list that contains moves as string
+            target_path : string, path for encoded moves
+
+        Prints:
+            None
+
+        Returns:
+            None
+    """
 
     encoded_lines = []
 
@@ -34,6 +59,19 @@ def moves_to_binary(moves, target_path):
 
 
 def moves_to_hand(moves, target_path):
+    """
+        Convert moves to explained versions
+
+        Arguments:
+            moves : List, list that contains moves as string
+            target_path : string, path for explained moves
+
+        Prints:
+            None
+
+        Returns:
+            None
+    """
 
     encoded_lines = []
 
@@ -69,6 +107,20 @@ def moves_to_hand(moves, target_path):
 
 
 def predict_moves(cubestring, moves = 0, time = 5):
+    """
+        Predict moves to solve cube using twophasesolver
+
+        Arguments:
+            cubestring : string,
+            moves : int, expected number of moves to solve cube
+            time : int, expected time to solve cube
+
+        Prints:
+            None
+
+        Returns:
+            sol_moves : List, moves list to solve the cube
+    """
 
     solution = sv.solve(cubestring, moves, time)
 
@@ -79,20 +131,59 @@ def predict_moves(cubestring, moves = 0, time = 5):
     return sol_moves[:move_count]
 
 
-def count_letters(string):
-    letter_count = Counter(char.lower() for char in string if char.isalpha())
+def count_letters(cubestring):
+    """
+        Count every letter to determine if the cube is solvable
+
+        Arguments:
+            cubestring : string, string that contains cube colours as letters
+
+        Prints:
+            None
+
+        Returns:
+            letter_count : List, letter counts
+    """
+
+    letter_count = Counter(char.lower() for char in cubestring if char.isalpha())
     return letter_count
 
 
 def get_string(path):
+    """
+        Reads and returns cubes colours as string from txt file
 
-    string = ''
+        Arguments:
+            path : string, path for cube colours
+
+        Prints:
+            None
+
+        Returns:
+            cubestring : string, string that contains cube colours
+    """
+
+    cubestring = ''
     with open(path, 'r') as f:
-        string = f.read()
+        cubestring = f.read()
 
-    return string[0:54]
+    return cubestring[0:54]
+
 
 def check_letter_counts(dict):
+    """
+        Checks that are all colours have 9 of each
+
+        Arguments:
+            dict : dictionary, dict that contains letter counts
+
+        Prints:
+            None
+
+        Returns:
+            cubestring : string, string that contains cube colours
+    """
+
     letters = ['b', 'f', 'd', 'u', 'l', 'r']
     for letter in letters:
         assert dict[letter] == 9, \
@@ -100,6 +191,19 @@ def check_letter_counts(dict):
             f'\nThere are {dict[letter]} numbers labeled {letter}.'
 
 def solve(path, target_path1, target_path2):
+    """
+        Calls necessary functions to solve
+
+        Arguments:
+
+
+        Prints:
+            None
+
+        Returns:
+            
+    """
+
 
     cubestring = get_string(path)
     counts = count_letters(cubestring)
@@ -111,5 +215,5 @@ def solve(path, target_path1, target_path2):
         f'\nSolving moves should be a list.\nMoves : {moves}'
     assert moves[0] != 'Error:', \
         f'\nCube is unsolvable\nText : {moves}'
-    moves_to_binary(moves, target_path1)
+    moves_to_b_format(moves, target_path1)
     moves_to_hand(moves, target_path2)

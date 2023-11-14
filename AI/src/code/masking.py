@@ -1,4 +1,3 @@
-
 import cv2 as cv
 import numpy as np
 import glob
@@ -8,7 +7,7 @@ def moves_to_urfdlb(src_path, target_path):
 
     results = get_pic_paths(src_path)
     print(results)
-    
+
     with open(target_path, 'w') as f:
             for elem in results:
                 f.write(f'{elem}')
@@ -22,7 +21,7 @@ def get_pic_paths(src_path):
     print(image_paths)
     for path in image_paths:
         results.extend([char for row in convert(path) for char in row])
-        
+
 
     print(results)
     return results
@@ -50,7 +49,7 @@ def convert(path):
         np.array([25, 255, 255])  # Orange
     ]
 
-    
+
 
     picsel_centers = [(50,50), (50,150), (50,250),
                   (150,50), (150,150), (150, 250),

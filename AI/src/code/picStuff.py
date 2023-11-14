@@ -1,16 +1,10 @@
-
 import cv2
 
-def take_pic(path):
+
+def take_pic(path, image_count):
+
     count = 0
-
-    def capture_frame(frame):
-        nonlocal count
-        cv2.imwrite(f"{path}cube_face{count}.jpg", frame)
-        count += 1
-        print(f"Captured image {count}")
-
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0) # 1
     cv2.namedWindow('Test')
 
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -18,36 +12,40 @@ def take_pic(path):
 
     x = width // 3
     y = height // 3
-    w = width // 4
+    w = width // 3 # 4
     h = width // 3
 
-    while True:
+    while count < image_count:
+
         ret, frame = cap.read()
         cv2.rectangle(frame, (x, y), (x + w, y + h), color=(0, 0, 255), thickness=4)
         cv2.imshow('Test', frame)
 
-        key = cv2.waitKey(1)
-        if key == ord('s'):
-            print("AA   ")
-            if count != 6:
-                #print("!!")
-                img = cv2.imwrite(f'{path}cube_face{count}.jpg', frame)
-                #print(img)
-                if img:
-                    
-                    count = count + 1
-                    print(count)
-        elif key == ord('q'):
-            break
+        if ord('s') == cv2.waitKey(1):
+            img = cv2.imwrite(f'{path}cube_face{count}.jpg', frame)
+
+            if img:
+                print(f'{count + 1}. image captured')
+                count = count + 1
 
     cap.release()
     cv2.destroyAllWindows()
 
-    for i in range(6):
-        image = cv2.imread(f'{path}cube_face{i}.jpg')
 
-        crop_coordinates = (x, y, w, h)
+def crop_images(path, image_count):
 
-        cropped_image = image[crop_coordinates[1]:crop_coordinates[1] + crop_coordinates[3], crop_coordinates[0]:crop_coordinates[0] + crop_coordinates[2]]
+        for i in range(image_count):
+            image = cv2.imread(f'{path}cube_face{i}.jpg')
 
-        cv2.imwrite(f'src/data/cube_face{i}.jpg', cropped_image)
+            crop_coordinates = (x, y, w, h)
+
+            cropped_image = image[crop_coordinates[1]:crop_coordinates[1] + crop_coordinates[3], crop_coordinates[0]:crop_coordinates[0] + crop_coordinates[2]]
+
+            cv2.imwrite(f'src/data/cube_face{i}.jpg', cropped_image)
+
+
+def image_main(path):
+
+    image_count = 6
+    take_pic(path, image_count)
+    crop_images(path, image_count)

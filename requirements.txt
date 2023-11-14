@@ -1,2 +1,6 @@
 RubikTwoPhase
 cv2
+glob
+numpy
+pandas
+serial
